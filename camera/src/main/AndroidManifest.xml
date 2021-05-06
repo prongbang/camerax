@@ -10,7 +10,7 @@
 		tools:ignore="ScopedStorage" />
 
 	<application>
-		<activity
+		<activity android:theme="@style/Theme.Camera"
 			android:name=".CameraActivity"
 			android:screenOrientation="portrait" />
 	</application>
