@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/cameraContainer"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="#38454C"
@@ -18,7 +19,7 @@
 		app:layout_constraintTop_toTopOf="parent"
 		app:srcCompat="@drawable/ic_close_white" />
 
-	<androidx.camera.view.PreviewView
+	<com.prongbang.camera.widget.PreviewView
 		android:id="@+id/viewFinder"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
@@ -27,17 +28,6 @@
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
-
-	<androidx.appcompat.widget.AppCompatImageView
-		android:id="@+id/imageCropButton"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		app:layout_constraintBottom_toBottomOf="@+id/viewFinder"
-		app:layout_constraintDimensionRatio="1:1"
-		app:layout_constraintEnd_toEndOf="@+id/viewFinder"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/viewFinder"
-		app:srcCompat="@drawable/ic_image_crop" />
 
 	<androidx.appcompat.widget.AppCompatImageView
 		android:id="@+id/switchCameraButton"
@@ -50,22 +40,21 @@
 		app:layout_constraintTop_toTopOf="@+id/cameraCaptureButton"
 		app:srcCompat="@drawable/ic_camera" />
 
-	<androidx.appcompat.widget.AppCompatImageView
+	<androidx.appcompat.widget.AppCompatImageButton
 		android:id="@+id/cameraCaptureButton"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginBottom="49dp"
-		android:background="?attr/selectableItemBackgroundBorderless"
-		android:elevation="2dp"
+		android:background="@drawable/ic_capture"
+		android:scaleType="fitCenter"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintLeft_toLeftOf="parent"
-		app:layout_constraintRight_toRightOf="parent"
-		app:srcCompat="@drawable/ic_capture" />
+		app:layout_constraintRight_toRightOf="parent" />
 
 	<androidx.appcompat.widget.AppCompatImageView
 		android:id="@+id/galleryButton"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
+		android:layout_width="32dp"
+		android:layout_height="32dp"
 		android:layout_marginEnd="40dp"
 		android:background="?attr/selectableItemBackgroundBorderless"
 		app:layout_constraintBottom_toBottomOf="@+id/cameraCaptureButton"

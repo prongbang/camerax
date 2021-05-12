@@ -2,12 +2,19 @@ package com.prongbang.camera
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.core.content.ContextCompat
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.karumi.dexter.Dexter
 import com.prongbang.camera.databinding.ActivityCameraBinding
 import com.prongbang.dexter.DexterPermissionsUtility
@@ -61,9 +68,46 @@ class CameraActivity : AppCompatActivity() {
 	private fun bindView() {
 		binding.apply {
 			switchCameraButton.setOnClickListener { cameraUtility.switchCamera() }
-			cameraCaptureButton.setOnClickListener { cameraUtility.takePhoto() }
+			cameraCaptureButton.setOnClickListener { takePhoto() }
 			galleryButton.setOnClickListener { }
 			closeButton.setOnClickListener { finish() }
+		}
+	}
+
+	private fun takePhoto() {
+		cameraUtility.takePhoto()
+				.observe(this@CameraActivity, {
+					when (it) {
+						is CameraState.Saved -> {
+							Toast.makeText(this@CameraActivity, it.data.absolutePath,
+									Toast.LENGTH_SHORT)
+									.show()
+							binding.galleryButton.load(it.data) {
+								crossfade(true)
+								transformations(CircleCropTransformation())
+							}
+						}
+						else -> {
+							Toast.makeText(this@CameraActivity, "Error !!",
+									Toast.LENGTH_SHORT)
+									.show()
+						}
+					}
+				})
+		flashAnimation()
+	}
+
+	private fun flashAnimation() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+			// Display flash animation to indicate that photo was captured
+			binding.apply {
+				cameraContainer.postDelayed({
+					cameraContainer.foreground = ColorDrawable(Color.WHITE)
+					cameraContainer.postDelayed(
+							{ cameraContainer.foreground = null },
+							ANIMATION_FAST_MILLIS)
+				}, ANIMATION_SLOW_MILLIS)
+			}
 		}
 	}
 
@@ -88,6 +132,9 @@ class CameraActivity : AppCompatActivity() {
 	}
 
 	companion object {
+		const val ANIMATION_FAST_MILLIS = 50L
+		const val ANIMATION_SLOW_MILLIS = 100L
+
 		fun navigate(context: Context?) {
 			context?.let {
 				ContextCompat.startActivity(
