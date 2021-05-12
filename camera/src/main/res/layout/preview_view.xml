@@ -24,7 +24,7 @@
 		app:layout_constraintTop_toTopOf="@+id/viewFinder"
 		app:srcCompat="@drawable/ic_image_crop" />
 
-	<com.prongbang.camera.widget.CameraPermissionView
+	<com.prongbang.camera.widget.PermissionView
 		android:id="@+id/cameraPermissionView"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
