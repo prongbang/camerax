@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#38454C">
+
+	<androidx.appcompat.widget.AppCompatImageView
+		android:id="@+id/noCameraAccessImage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="40dp"
+		app:layout_constraintBottom_toTopOf="@+id/permissionDescText"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_chainStyle="packed"
+		app:srcCompat="@drawable/ic_no_camera_access" />
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/permissionDescText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="24dp"
+		android:text="Please allow myAIS to access to your camera"
+		android:textColor="#B0BEC5"
+		app:layout_constraintBottom_toTopOf="@+id/enabledAccessButton"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/noCameraAccessImage" />
+
+	<androidx.appcompat.widget.AppCompatButton
+		android:id="@+id/enabledAccessButton"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="24dp"
+		android:layout_marginBottom="40dp"
+		android:background="@drawable/shape_button_border_rounded"
+		android:clickable="true"
+		android:focusable="true"
+		android:foreground="?attr/selectableItemBackgroundBorderless"
+		android:paddingStart="36dp"
+		android:paddingTop="16dp"
+		android:paddingEnd="36dp"
+		android:paddingBottom="16dp"
+		android:text="Enabled Access"
+		android:textAllCaps="false"
+		android:textColor="#5FBB1C"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/permissionDescText"
+		tools:ignore="UnusedAttribute" />
+</androidx.constraintlayout.widget.ConstraintLayout>

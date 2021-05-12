@@ -18,4 +18,8 @@ class PreviewView @kotlin.jvm.JvmOverloads constructor(
 
 	val surfaceProvider get() = binding.viewFinder.surfaceProvider
 
+	val cameraPermissionView get() = binding.cameraPermissionView
+	val enabledCameraAccessButton get() = binding.cameraPermissionView.enabledAccessButton
+	val permissionDescText get() = binding.cameraPermissionView.permissionDescText
+
 }

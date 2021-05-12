@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +18,7 @@ import com.karumi.dexter.Dexter
 import com.prongbang.camera.databinding.ActivityCameraBinding
 import com.prongbang.dexter.DexterPermissionsUtility
 import com.prongbang.dexter.MultipleCheckPermissionsListenerImpl
+import com.prongbang.dexter.PermissionsChecker
 import com.prongbang.dexter.PermissionsCheckerListenerImpl
 import com.prongbang.dexter.PermissionsGranted
 import com.prongbang.dexter.PermissionsUtility
@@ -71,6 +71,7 @@ class CameraActivity : AppCompatActivity() {
 			cameraCaptureButton.setOnClickListener { takePhoto() }
 			galleryButton.setOnClickListener { }
 			closeButton.setOnClickListener { finish() }
+			viewFinder.enabledCameraAccessButton.setOnClickListener { requestCameraPermission() }
 		}
 	}
 
@@ -79,9 +80,6 @@ class CameraActivity : AppCompatActivity() {
 				.observe(this@CameraActivity, {
 					when (it) {
 						is CameraState.Saved -> {
-							Toast.makeText(this@CameraActivity, it.data.absolutePath,
-									Toast.LENGTH_SHORT)
-									.show()
 							binding.galleryButton.load(it.data) {
 								crossfade(true)
 								transformations(CircleCropTransformation())
@@ -111,10 +109,27 @@ class CameraActivity : AppCompatActivity() {
 		}
 	}
 
+	private fun startCamera() {
+		binding.viewFinder.cameraPermissionView.visibility = View.GONE
+		cameraUtility.setupCamera(binding.viewFinder.surfaceProvider)
+	}
+
 	private fun startCameraWithPermission() {
+		permissionsUtility.isCameraGranted(object : PermissionsChecker {
+			override fun onGranted() {
+				startCamera()
+			}
+
+			override fun onNotGranted() {
+				binding.viewFinder.cameraPermissionView.visibility = View.VISIBLE
+			}
+		})
+	}
+
+	private fun requestCameraPermission() {
 		permissionsUtility.checkCameraGranted(object : PermissionsGranted() {
 			override fun onGranted() {
-				cameraUtility.setupCamera(binding.viewFinder.surfaceProvider)
+				startCamera()
 			}
 
 			override fun onDenied() {
